@@ -1,0 +1,41 @@
+maxim_02.txt:   242	ls | grep txt
+maxim_03.txt:Examples would be: ls, bash, grep, python, firefox... if it is an ELF binary and the execute bit is set... it will run
+maxim_03.txt:Pattern Matching rules used inside programs used in things like grep, sed, awk, programming language. "grep "^c.*z$" file.txt"
+maxim_03.txt:regular expression: used by tools (grep) match text inside file more powerful, Dont expand file names
+maxim_03.txt:https://developers.redhat.com/articles/2022/09/14/beginners-guide-regular-expressions-grep
+maxim_03.txt:Strengths: human readable, portable, universally supported, easy to grep
+maxim_03.txt:"grep "error" file.txt" — prints any line containing the word error.
+maxim_03.txt:--Basic grep flags--
+maxim_03.txt:grep "error" app.log — search logs for "error" make it case insensitive
+maxim_03.txt:grep -i "error" app.log matches error, ERROR, ErRoR.
+maxim_03.txt:grep -n "error" app.log show error and the number line its on.
+maxim_03.txt:grep -c "error" app.log counts errors and prints a number
+maxim_03.txt:grep -C 2 "error" app.log show 2 lines before and after error.
+maxim_03.txt:grep "pattern" file      -> print matching lines
+maxim_03.txt:grep -i "pattern" file   -> ignore case
+maxim_03.txt:grep -n "pattern" file   -> show line numbers
+maxim_03.txt:grep -v "pattern" file   -> invert (non-matching)
+maxim_03.txt:grep -r "pattern" dir    -> recursive
+maxim_03.txt:grep -c "pattern" file   -> count matches
+maxim_03.txt:grep -w "word" file     -> whole word only
+maxim_03.txt:grep -A3 -B3 "x" file   -> 3 lines after/before match
+maxim_03.txt:What is grep
+maxim_03.txt:Egrep: Allows use of advanced regex without escaping
+maxim_03.txt:(egrep "error|fail|critical" app.log) this matches error, fail, critical
+maxim_03.txt:egrep is the same thing as "grep -E"
+maxim_03.txt:--Example of grep -E--
+maxim_03.txt:grep -E "[0-9]+.[0-9]+.[0-9]+.[0-9]+" log.txt
+maxim_03.txt:"grep -Ei "error|fail|critical|panic|denied" app.log" ignores case, looks for all words
+maxim_03.txt:egrep "a|b|c" file   -> same as grep -E (extended regex, no escaping)
+maxim_03.txt:grep -E "pattern" file
+maxim_03.txt:Example: grep -E "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+" log.txt  (match IP)
+maxim_03.txt:i.e: cat file.txt | grep "error" this prints file, send it to grep, only show lines with error. Not a super useful command because you could just grep the file directly
+maxim_03.txt:live errorlog: tail -f app.log | grep "error"
+maxim_03.txt:limit output: grep "fail" bigfile.log | head
+maxim_03.txt:inspect last match: grep "login" auth.log | tail
+maxim_03.txt:interactive browse: grep -r "todo" . | less
+maxim_03.txt:monitor failed login: tail -f /var/log/auth.log | grep "failed password"
+maxim_03.txt:Examples:  cat file | grep "x"
+maxim_03.txt:           tail -f log | grep "error"
+maxim_03.txt:           grep "x" bigfile | head
+maxim_03.txt:           grep "x" bigfile | less
