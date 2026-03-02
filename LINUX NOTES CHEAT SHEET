@@ -1,0 +1,195 @@
+# LINUX NOTES CHEAT SHEET — BASIC STRUCTURE
+
+## LOCATION / NAVIGATION
+
+Go to your notes folder:
+
+```
+cd ~/Reid_Maxim
+```
+
+Check where you are:
+
+```
+pwd
+```
+
+See files in folder:
+
+```
+ls
+```
+
+## BASIC COMMAND STRUCTURE
+
+Most commands follow this pattern:
+
+```
+command [options] input > output
+```
+
+Example:
+
+```
+grep -i "word" file.txt > output.txt
+```
+
+command = what you are doing
+options = extra behavior (-i, -C, etc)
+input = file(s) to read
+
+> = redirect output into file
+> output = file to save results
+
+## GREP (SEARCH TEXT)
+
+Search for a word:
+
+```
+grep "grep" maxim_01.txt
+```
+
+Ignore uppercase/lowercase:
+
+```
+grep -i "grep" maxim_01.txt
+```
+
+Keep context (lines before/after):
+
+```
+grep -i -C 3 "grep" maxim_01.txt
+```
+
+Search ALL 5 note files:
+
+```
+grep -i -C 3 "grep" maxim_0*.txt
+```
+
+Include filename in results:
+
+```
+grep -i -H -C 3 "grep" maxim_0*.txt
+```
+
+## REDIRECTION (SAVE OUTPUT)
+
+Overwrite file:
+
+```
+> output.txt
+```
+
+Append to file:
+
+```
+>> output.txt
+```
+
+Example:
+
+```
+grep -i "grep" maxim_0*.txt > touched.txt
+```
+
+## IMPORTANT RULE
+
+Never use the output file as input.
+
+BAD (causes error):
+
+```
+grep "grep" *.txt > touched.txt
+```
+
+if touched.txt matches *.txt
+
+## PIPING ( | )
+
+Pipe sends output from one command into another:
+
+```
+command1 | command2
+```
+
+Example — extract URL and open browser:
+
+```
+grep -Eo 'https?://[^ ]+' maxim_0*.txt | head -n 1 | xargs qutebrowser
+```
+
+## COMMON PIPE PARTS
+
+head -n 1     = take first result
+sort -u       = remove duplicates
+xargs         = pass result as command input
+
+## FILE CREATION
+
+Create empty file:
+
+```
+touch touched.txt
+```
+
+Create file from command output:
+
+```
+grep "grep" maxim_0*.txt > touched.txt
+```
+
+## USER MANAGEMENT (BASIC)
+
+Create user:
+
+```
+sudo useradd -m username
+```
+
+Set password:
+
+```
+sudo passwd username
+```
+
+## LIST ALL USERS
+
+All users are stored here:
+
+```
+/etc/passwd
+```
+
+Save usernames only:
+
+```
+cut -d: -f1 /etc/passwd > winners.txt
+```
+
+## QUICK WORKFLOW (YOUR LAB FLOW)
+
+1. Go to notes folder:
+
+   cd ~/Reid_Maxim
+
+2. Search notes:
+
+   grep -i -H -C 3 "grep" maxim_0*.txt > touched.txt
+
+3. Extract URL and open browser:
+
+   grep -Eo 'https?://[^ ]+' maxim_0*.txt | head -n 1 | xargs qutebrowser
+
+4. Save users list:
+
+   cut -d: -f1 /etc/passwd > winners.txt
+
+## MENTAL MODEL
+
+* Linux commands READ from files
+* Pipes ( | ) pass results between commands
+* > sends output into a file
+* You must be in the correct directory or use full paths
+
+# END OF CHEAT SHEET
