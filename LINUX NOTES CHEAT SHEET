@@ -1,195 +1,249 @@
-# LINUX NOTES CHEAT SHEET — BASIC STRUCTURE
+LINUX EXAM QUICK REFERENCE GUIDE
+================================
 
-## LOCATION / NAVIGATION
-
-Go to your notes folder:
-
-```
-cd ~/Reid_Maxim
-```
-
-Check where you are:
-
-```
-pwd
-```
-
-See files in folder:
-
-```
-ls
-```
-
-## BASIC COMMAND STRUCTURE
-
+GENERAL MENTAL MODEL
+--------------------
 Most commands follow this pattern:
 
-```
-command [options] input > output
-```
+command [options] input | next_command > output_file
 
-Example:
+command  = action
+options  = modify behavior (-i, -C, etc)
+input    = files or text
+|         = pipe output into another command
+>         = save output (overwrite)
+>>        = append output
 
-```
-grep -i "word" file.txt > output.txt
-```
 
-command = what you are doing
-options = extra behavior (-i, -C, etc)
-input = file(s) to read
+BASIC NAVIGATION
+----------------
+Show current location:
+pwd
 
-> = redirect output into file
-> output = file to save results
+List files:
+ls
 
-## GREP (SEARCH TEXT)
+Go to folder:
+cd path/to/folder
 
-Search for a word:
+Go home:
+cd ~
 
-```
-grep "grep" maxim_01.txt
-```
 
-Ignore uppercase/lowercase:
-
-```
-grep -i "grep" maxim_01.txt
-```
-
-Keep context (lines before/after):
-
-```
-grep -i -C 3 "grep" maxim_01.txt
-```
-
-Search ALL 5 note files:
-
-```
-grep -i -C 3 "grep" maxim_0*.txt
-```
-
-Include filename in results:
-
-```
-grep -i -H -C 3 "grep" maxim_0*.txt
-```
-
-## REDIRECTION (SAVE OUTPUT)
-
-Overwrite file:
-
-```
-> output.txt
-```
-
-Append to file:
-
-```
->> output.txt
-```
-
-Example:
-
-```
-grep -i "grep" maxim_0*.txt > touched.txt
-```
-
-## IMPORTANT RULE
-
-Never use the output file as input.
-
-BAD (causes error):
-
-```
-grep "grep" *.txt > touched.txt
-```
-
-if touched.txt matches *.txt
-
-## PIPING ( | )
-
-Pipe sends output from one command into another:
-
-```
-command1 | command2
-```
-
-Example — extract URL and open browser:
-
-```
-grep -Eo 'https?://[^ ]+' maxim_0*.txt | head -n 1 | xargs qutebrowser
-```
-
-## COMMON PIPE PARTS
-
-head -n 1     = take first result
-sort -u       = remove duplicates
-xargs         = pass result as command input
-
-## FILE CREATION
-
+FILE CREATION
+-------------
 Create empty file:
-
-```
-touch touched.txt
-```
+touch filename.txt
 
 Create file from command output:
+command > filename.txt
 
-```
-grep "grep" maxim_0*.txt > touched.txt
-```
 
-## USER MANAGEMENT (BASIC)
+REDIRECTION
+-----------
+Overwrite output:
+>
 
-Create user:
+Append output:
+>>
 
-```
+Example:
+command > output.txt
+command >> output.txt
+
+
+PIPING (|)
+----------
+Pipe sends output into next command.
+
+Example:
+command1 | command2
+
+Common use:
+grep "word" file.txt | less
+
+
+MAN PAGES (MANUALS)
+-------------------
+View manual:
+man command
+
+Save manual to file:
+man command > output.txt
+
+Append multiple manuals:
+man cmd1 > output.txt
+man cmd2 >> output.txt
+
+Better formatting:
+man command | col -b > output.txt
+
+
+GREP BASICS
+-----------
+Search for text:
+grep "word" file.txt
+
+Search multiple files:
+grep "word" *.txt
+
+Ignore case:
+grep -i "word" file.txt
+
+Show filename in results:
+grep -H "word" *.txt
+
+
+GREP CONTEXT (ASSOCIATED INFORMATION)
+-------------------------------------
+Lines before + after match:
+grep -C 3 "word" file.txt
+
+Only before:
+grep -B 3 "word" file.txt
+
+Only after:
+grep -A 3 "word" file.txt
+
+Common exam pattern:
+grep -i -H -C 3 "word" *.txt > output.txt
+
+
+IMPORTANT GREP RULE
+-------------------
+Never include output file in input wildcard.
+
+BAD:
+grep "word" *.txt > output.txt
+(if output.txt matches *.txt)
+
+GOOD:
+grep "word" notes*.txt > output.txt
+
+
+REGEX / EXTRACT MATCHES
+-----------------------
+Extract only matching text:
+grep -Eo "pattern" file.txt
+
+Extract URLs:
+grep -Eo 'https?://[^ ]+' file.txt
+
+
+PIPE TO OPEN URL
+----------------
+Extract link and open browser:
+grep -Eo 'https?://[^ ]+' file.txt | head -n 1 | xargs qutebrowser
+
+
+USER MANAGEMENT
+---------------
+Create new user:
 sudo useradd -m username
-```
 
 Set password:
-
-```
 sudo passwd username
-```
 
-## LIST ALL USERS
+List all users:
+cat /etc/passwd
 
-All users are stored here:
+List usernames only:
+cut -d: -f1 /etc/passwd > users.txt
 
-```
-/etc/passwd
-```
 
-Save usernames only:
-
-```
+LIST USERS + SAVE TO FILE
+-------------------------
 cut -d: -f1 /etc/passwd > winners.txt
-```
 
-## QUICK WORKFLOW (YOUR LAB FLOW)
 
-1. Go to notes folder:
+COMMON FILE COMMANDS
+--------------------
+Copy file:
+cp source.txt destination.txt
 
-   cd ~/Reid_Maxim
+Move file:
+mv file.txt folder/
 
-2. Search notes:
+Remove file:
+rm file.txt
 
-   grep -i -H -C 3 "grep" maxim_0*.txt > touched.txt
 
-3. Extract URL and open browser:
+VIEW FILE CONTENT
+-----------------
+Show file:
+cat file.txt
 
-   grep -Eo 'https?://[^ ]+' maxim_0*.txt | head -n 1 | xargs qutebrowser
+Scroll file:
+less file.txt
 
-4. Save users list:
+Show first lines:
+head file.txt
 
-   cut -d: -f1 /etc/passwd > winners.txt
+Show last lines:
+tail file.txt
 
-## MENTAL MODEL
 
-* Linux commands READ from files
-* Pipes ( | ) pass results between commands
-* > sends output into a file
-* You must be in the correct directory or use full paths
+PERMISSIONS / GROUP FIXES
+-------------------------
+Add user to group:
+sudo usermod -aG groupname username
 
-# END OF CHEAT SHEET
+Check groups:
+groups
+
+
+SYMBOLIC LINKS (SHORTCUTS)
+--------------------------
+Create link:
+ln -s /real/path ~/shortcut
+
+Remove link:
+rm ~/shortcut
+
+
+EXAM WORKFLOW (SAFE ROUTINE)
+----------------------------
+1. Go to correct folder:
+   cd path/to/files
+
+2. Confirm files exist:
+   ls
+
+3. Run command
+
+4. Verify output:
+   cat output.txt
+
+5. Submit output file
+
+
+FAST TROUBLESHOOT CHECKLIST
+---------------------------
+If command doesn't work:
+- run pwd
+- run ls
+- check spelling (case-sensitive)
+- simplify command
+
+If grep shows nothing:
+- try -i
+- check file with cat
+- test simple search first
+
+If "input file is also output":
+- output file included in wildcard
+- specify exact input files
+
+
+CORE EXAM CONCEPTS
+------------------
+grep   = search text
+|      = pass output to next command
+>      = save output
+>>     = add to file
+man    = manuals
+cat    = display file
+cut    = extract columns
+xargs  = send input as command argument
+
+END QUICK REFERENCE
