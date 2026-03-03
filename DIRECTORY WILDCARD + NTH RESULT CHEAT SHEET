@@ -1,0 +1,38 @@
+DIRECTORY WILDCARD + NTH RESULT CHEAT SHEET
+============================================
+
+Find directories starting with a letter:
+
+ls -d R*/
+
+R*   = starts with R
+*/   = directories only
+-d   = list directory name, not contents
+
+
+Select nth result (birth month = N):
+
+ls -d R*/ | sed -n 'Np'
+
+Example (March = 3):
+ls -d R*/ | sed -n '3p'
+
+
+Change that directory to read-only:
+
+chmod 444 directory_name
+
+
+Combine into one command:
+
+chmod 444 $(ls -d R*/ | sed -n 'Np')
+
+
+Replace:
+R = first letter of your name
+N = birth month number
+
+
+PERMISSION REMINDER
+-------------------
+444 = read-only for user, group, others
