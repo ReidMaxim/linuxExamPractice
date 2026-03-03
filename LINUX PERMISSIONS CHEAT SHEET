@@ -1,0 +1,165 @@
+LINUX PERMISSIONS CHEAT SHEET
+=============================
+
+PERMISSION STRUCTURE
+--------------------
+ls -l filename shows something like:
+
+-rwxr-xr--
+
+Breakdown:
+
+-  = file type
+rwx = user (owner)
+r-x = group
+r-- = others
+
+Order ALWAYS:
+user | group | others
+
+
+WHAT r w x MEAN
+---------------
+r = read  (4)
+w = write (2)
+x = execute (1)
+
+Add numbers together to calculate value.
+
+
+NUMERIC (OCTAL) METHOD
+----------------------
+
+Format:
+
+chmod XYZ filename
+
+X = user
+Y = group
+Z = others
+
+
+COMMON VALUES
+-------------
+
+7 = rwx (4+2+1)
+6 = rw- (4+2)
+5 = r-x (4+1)
+4 = r-- (4)
+3 = -wx (2+1)
+2 = -w- (2)
+1 = --x (1)
+0 = --- (0)
+
+
+COMMON EXAM SETTINGS
+--------------------
+
+Read-only for all:
+chmod 444 file.txt
+
+Owner full, others read:
+chmod 744 file.txt
+
+Owner full, group read, others none:
+chmod 740 file.txt
+
+Owner read/write only:
+chmod 600 file.txt
+
+Owner full only:
+chmod 700 file.txt
+
+Executable for all:
+chmod 755 script.sh
+
+Read/write for user and group:
+chmod 660 file.txt
+
+
+SYMBOLIC METHOD (LETTER METHOD)
+--------------------------------
+
+Format:
+
+chmod who+permission filename
+
+who:
+u = user
+g = group
+o = others
+a = all
+
+permissions:
+r = read
+w = write
+x = execute
+
+
+EXAMPLES (SYMBOLIC)
+-------------------
+
+Add execute for user:
+chmod u+x script.sh
+
+Remove write for group:
+chmod g-w file.txt
+
+Make read-only for all:
+chmod a=r file.txt
+
+Give user read/write:
+chmod u=rw file.txt
+
+Give group read:
+chmod g+r file.txt
+
+Remove all permissions for others:
+chmod o-rwx file.txt
+
+
+IMPORTANT EXAM PATTERNS
+-----------------------
+
+"Read-only for all"
+→ chmod 444 file
+
+"User full control only"
+→ chmod 700 file
+
+"User read/write, group read, others none"
+→ chmod 640 file
+
+"Executable script for everyone"
+→ chmod 755 script.sh
+
+
+HOW TO CHECK PERMISSIONS
+------------------------
+
+ls -l filename
+
+
+MENTAL SHORTCUT
+---------------
+
+r=4
+w=2
+x=1
+
+Add numbers per section:
+
+user group others
+
+
+EXAMPLE BREAKDOWN
+-----------------
+
+chmod 754 file
+
+7 = user rwx
+5 = group r-x
+4 = others r--
+
+
+END PERMISSION GUIDE
